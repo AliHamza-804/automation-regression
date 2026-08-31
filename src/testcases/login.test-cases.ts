@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
-import { LoginPage } from '../../src/pages/login.page';
-import { requiredEnv } from '../../src/helpers/env';
+import { LoginPage } from '../pages/login.page';
+import { requiredEnv } from '../helpers/env';
 
 // Test case implementation imported by tests/login/login.spec.ts. Registration specs reuse
 // src/fixtures.ts) — this is the one file that wants a fresh, logged-out page to actually
@@ -16,3 +16,4 @@ export function registerLoginTestCases(): void {
     await expect(page.getByRole('heading', { name: 'Welcome' })).toBeVisible();
   });
 }
+

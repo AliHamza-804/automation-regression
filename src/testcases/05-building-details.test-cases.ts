@@ -1,11 +1,10 @@
 import type { Locator } from '@playwright/test';
-// Test case implementation imported by tests/registration/05-building-details.spec.ts.
-import { expect, test } from '../../src/fixtures';
-import { BuildingCoveredAreaPage } from '../../src/pages/building-covered-area.page';
-import { OtherFacilitiesPage } from '../../src/pages/other-facilities.page';
-import { expectNextDisabled, expectNextEnabled } from '../../src/helpers/validation';
-import { landInMarlaCases, marlaValueCases, coveredAreaCases, type NumericFieldCase } from '../../src/data/building.data';
-import { otherFacilityCheckboxes, mandatoryOtherFacility } from '../../src/data/registration-data';
+import { expect, test } from '../fixtures';
+import { BuildingCoveredAreaPage } from '../pages/building-covered-area.page';
+import { OtherFacilitiesPage } from '../pages/other-facilities.page';
+import { expectNextDisabled, expectNextEnabled } from '../helpers/validation';
+import { landInMarlaCases, marlaValueCases, coveredAreaCases, type NumericFieldCase } from '../data/building.data';
+import { otherFacilityCheckboxes, mandatoryOtherFacility } from '../data/registration-data';
 
 export function registerBuildingDetailsTestCases(): void {
   test.beforeEach(async ({ page }) => {
@@ -120,6 +119,7 @@ export function registerBuildingDetailsTestCases(): void {
     await expectNextEnabled(page);
   });
 }
+
 
 // TC-035 Facilities (Step 7 — Other Facilities)
 export function registerOtherFacilitiesTestCases(): void {

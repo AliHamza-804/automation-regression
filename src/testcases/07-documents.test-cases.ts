@@ -1,23 +1,23 @@
 import type { Locator } from '@playwright/test';
-// Test case implementation imported by tests/registration/07-documents.spec.ts.
-import { expect, test } from '../../src/fixtures';
-import { AttachmentsPage } from '../../src/pages/attachments.page';
-import { documentSlots, type DocumentSlot } from '../../src/data/documents.data';
-import { attachmentSections } from '../../src/data/registration-data';
+import { expect, test } from '../fixtures';
+import { AttachmentsPage } from '../pages/attachments.page';
+import { documentSlots, type DocumentSlot } from '../data/documents.data';
+import { attachmentSections } from '../data/registration-data';
 import {
   unsupportedFormatFile,
   oversizedImageFile,
   oversizedPdfFile,
   corruptZeroByteFile,
   type TestFile,
-} from '../../src/helpers/test-files';
-import { instituteFullView } from '../../src/helpers/asset-files';
+} from '../helpers/test-files';
+import { instituteFullView } from '../helpers/asset-files';
 
 async function inputForSlot(attachments: AttachmentsPage, slot: DocumentSlot): Promise<Locator> {
   return slot.strategy === 'sublabel' && slot.subLabel
     ? attachments.fileInputUnderLabel(slot.heading, slot.subLabel)
     : attachments.fileInputForSection(slot.heading);
 }
+
 
 async function upload(attachments: AttachmentsPage, slot: DocumentSlot, file: TestFile): Promise<void> {
   const input = await inputForSlot(attachments, slot);
