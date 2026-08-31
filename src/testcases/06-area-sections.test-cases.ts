@@ -1,9 +1,8 @@
-// Test case implementation imported by tests/registration/06-area-sections.spec.ts.
-import { expect, test } from '../../src/fixtures';
-import { AreaSectionsPage } from '../../src/pages/area-sections.page';
-import { areaSections } from '../../src/data/area-sections.data';
-import { unsupportedFormatFile } from '../../src/helpers/test-files';
-import { facilityPhotoByTab } from '../../src/helpers/asset-files';
+import { expect, test } from '../fixtures';
+import { AreaSectionsPage } from '../pages/area-sections.page';
+import { areaSections } from '../data/area-sections.data';
+import { unsupportedFormatFile } from '../helpers/test-files';
+import { facilityPhotoByTab } from '../helpers/asset-files';
 
 // A per-run unique suffix keeps repeated suite runs from producing exact-duplicate
 // rows in the shared draft's results tables (Add always appends — there's no upsert).
@@ -111,3 +110,4 @@ export function registerAreaSectionsTestCases(): void {
     await expect(page.getByRole('button', { name: 'Next' })).toBeEnabled();
   });
 }
+

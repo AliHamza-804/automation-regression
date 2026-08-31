@@ -1,9 +1,8 @@
-// Test case implementation imported by tests/registration/04-ownership-details.spec.ts.
-import { expect, test } from '../../src/fixtures';
-import { OwnershipDetailsPage } from '../../src/pages/ownership-details.page';
-import { expectNextEnabled } from '../../src/helpers/validation';
-import { unsupportedFormatFile, oversizedImageFile } from '../../src/helpers/test-files';
-import { ownerProfilePicture } from '../../src/helpers/asset-files';
+import { expect, test } from '../fixtures';
+import { OwnershipDetailsPage } from '../pages/ownership-details.page';
+import { expectNextEnabled } from '../helpers/validation';
+import { unsupportedFormatFile, oversizedImageFile } from '../helpers/test-files';
+import { ownerProfilePicture } from '../helpers/asset-files';
 import {
   ownerNameCases,
   cnicCases,
@@ -11,8 +10,8 @@ import {
   ownerLandlineCases,
   ownerEmailCases,
   ownerAddressCases,
-} from '../../src/data/ownership.data';
-import type { FieldCase } from '../../src/data/basic-info.data';
+} from '../data/ownership.data';
+import type { FieldCase } from '../data/basic-info.data';
 
 export function registerOwnershipDetailsTestCases(): void {
   test.beforeEach(async ({ page }) => {
@@ -147,3 +146,4 @@ export function registerOwnershipDetailsTestCases(): void {
     await expectNextEnabled(page);
   });
 }
+

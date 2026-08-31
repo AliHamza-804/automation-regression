@@ -1,8 +1,7 @@
-// Test case implementation imported by tests/registration/03-address-details.spec.ts.
-import { expect, test } from '../../src/fixtures';
-import { AddressDetailsPage } from '../../src/pages/address-details.page';
-import { expectNextDisabled, expectNextEnabled } from '../../src/helpers/validation';
-import { validAddressDetails } from '../../src/data/registration-data';
+import { expect, test } from '../fixtures';
+import { AddressDetailsPage } from '../pages/address-details.page';
+import { expectNextDisabled, expectNextEnabled } from '../helpers/validation';
+import { validAddressDetails } from '../data/registration-data';
 
 export function registerAddressDetailsTestCases(): void {
   test.beforeEach(async ({ page }) => {
@@ -127,3 +126,4 @@ export function registerAddressDetailsTestCases(): void {
     await expectNextEnabled(page);
   });
 }
+
