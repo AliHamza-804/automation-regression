@@ -1,9 +1,8 @@
-// Test case implementation imported by tests/registration/02-basic-info.spec.ts.
-import { expect, test } from '../../src/fixtures';
-import { BasicInfoPage } from '../../src/pages/basic-info.page';
-import { expectNextEnabled } from '../../src/helpers/validation';
-import { unsupportedFormatFile, oversizedImageFile, corruptZeroByteFile } from '../../src/helpers/test-files';
-import { instituteLogo } from '../../src/helpers/asset-files';
+import { expect, test } from '../fixtures';
+import { BasicInfoPage } from '../pages/basic-info.page';
+import { expectNextEnabled } from '../helpers/validation';
+import { unsupportedFormatFile, oversizedImageFile, corruptZeroByteFile } from '../helpers/test-files';
+import { instituteLogo } from '../helpers/asset-files';
 import {
   instituteNameCases,
   headNameCases,
@@ -17,7 +16,7 @@ import {
   accountNumberCases,
   ibanCases,
   type FieldCase,
-} from '../../src/data/basic-info.data';
+} from '../data/basic-info.data';
 
 export function registerBasicInfoTestCases(): void {
   test.beforeEach(async ({ page }) => {
@@ -216,3 +215,4 @@ export function registerBasicInfoTestCases(): void {
     await expectNextEnabled(page);
   });
 }
+

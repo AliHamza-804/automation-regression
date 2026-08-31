@@ -1,7 +1,6 @@
-// Test case implementation imported by tests/registration/09-final-submission.spec.ts.
-import { expect, test } from '../../src/fixtures';
-import { AttachmentsPage } from '../../src/pages/attachments.page';
-import { documentSlots } from '../../src/data/documents.data';
+import { expect, test } from '../fixtures';
+import { AttachmentsPage } from '../pages/attachments.page';
+import { documentSlots } from '../data/documents.data';
 
 /**
  * TC-036 Final Submission is real and irreversible: clicking Submit here files an
@@ -42,3 +41,4 @@ export function registerFinalSubmissionTestCases(): void {
   //   - Duplicate-submit guard: immediately after a real submit, confirm Submit is
   //     disabled and a second click does not create a second application record.
 }
+

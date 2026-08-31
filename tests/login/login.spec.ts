@@ -1,4 +1,4 @@
 import { test } from '@playwright/test';
-import { registerLoginTestCases } from '../helpers/login.test-cases';
+import { registerLoginTestCases } from '../../src/testcases/login.test-cases';
 
 test.describe('Login', registerLoginTestCases);

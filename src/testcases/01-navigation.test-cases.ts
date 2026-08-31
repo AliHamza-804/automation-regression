@@ -1,6 +1,5 @@
-// Test case implementation imported by tests/registration/01-navigation.spec.ts.
-import { expect, test } from '../../src/fixtures';
-import { DashboardPage, ApplicationStatusPage, openRegistrationWizard } from '../../src/pages/dashboard.page';
+import { expect, test } from '../fixtures';
+import { DashboardPage, ApplicationStatusPage, openRegistrationWizard } from '../pages/dashboard.page';
 
 // TC-002 — Verify that a new registration form opens correctly and only once per entry point.
 export function registerNavigationTestCases(): void {
@@ -49,3 +48,4 @@ export function registerNavigationTestCases(): void {
     await context.close();
   });
 }
+

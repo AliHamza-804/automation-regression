@@ -1,5 +1,5 @@
 import { test } from '../../src/fixtures';
-import { registerFinalSubmissionTestCases } from '../helpers/09-final-submission.test-cases';
+import { registerFinalSubmissionTestCases } from '../../src/testcases/09-final-submission.test-cases';
 
 test.describe('Final Submission', () => {
   test.skip(

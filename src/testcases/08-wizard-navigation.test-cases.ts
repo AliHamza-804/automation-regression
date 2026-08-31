@@ -1,14 +1,13 @@
-// Test case implementation imported by tests/registration/08-wizard-navigation.spec.ts.
-import { expect, test } from '../../src/fixtures';
-import { BasicInfoPage } from '../../src/pages/basic-info.page';
-import { AddressDetailsPage } from '../../src/pages/address-details.page';
-import { OwnershipDetailsPage } from '../../src/pages/ownership-details.page';
-import { BuildingCoveredAreaPage } from '../../src/pages/building-covered-area.page';
-import { AreaSectionsPage } from '../../src/pages/area-sections.page';
-import { OtherFacilitiesPage } from '../../src/pages/other-facilities.page';
-import { expectNextDisabled, expectNextEnabled, nextButton } from '../../src/helpers/validation';
-import { ownerProfilePicture } from '../../src/helpers/asset-files';
-import { otherFacilityCheckboxes, mandatoryOtherFacility } from '../../src/data/registration-data';
+import { expect, test } from '../fixtures';
+import { BasicInfoPage } from '../pages/basic-info.page';
+import { AddressDetailsPage } from '../pages/address-details.page';
+import { OwnershipDetailsPage } from '../pages/ownership-details.page';
+import { BuildingCoveredAreaPage } from '../pages/building-covered-area.page';
+import { AreaSectionsPage } from '../pages/area-sections.page';
+import { OtherFacilitiesPage } from '../pages/other-facilities.page';
+import { expectNextDisabled, expectNextEnabled, nextButton } from '../helpers/validation';
+import { ownerProfilePicture } from '../helpers/asset-files';
+import { otherFacilityCheckboxes, mandatoryOtherFacility } from '../data/registration-data';
 
 const runId = Date.now();
 
@@ -114,3 +113,4 @@ export function registerWizardNavigationTestCases(): void {
     await expect(page).toHaveURL(/\/attachments/);
   });
 }
+
