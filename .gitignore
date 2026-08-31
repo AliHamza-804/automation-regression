@@ -8,8 +8,12 @@ node_modules/
 /playwright/.auth/
 /.playwright-mcp/
 /.claude/
+
 # Secrets
 .env
+
+# Markdown documents
+*.md
 
 # tesseract.js OCR language data cache
 *.traineddata
