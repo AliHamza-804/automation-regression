@@ -6,6 +6,8 @@
   "scripts": {
     "test": "playwright test",
     "test:login": "playwright test tests/login/login.spec.ts",
+    "test:registration": "playwright test tests/registration",
+    "test:final-submission": "RUN_FINAL_SUBMISSION=true playwright test tests/registration/09-final-submission.spec.ts",
     "test:headed": "playwright test --headed",
     "test:ui": "playwright test --ui"
   },
@@ -16,7 +18,8 @@
   "devDependencies": {
     "@playwright/test": "^1.62.1",
     "@types/node": "^26.3.0",
-    "dotenv": "^17.4.2"
+    "dotenv": "^17.4.2",
+    "typescript": "^7.0.2"
   },
   "dependencies": {
     "jimp": "^1.6.1",
