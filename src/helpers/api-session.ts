@@ -1,8 +1,16 @@
 import { expect, request, type APIRequestContext, type Browser, type BrowserContext, type Page } from '@playwright/test';
 import { requiredEnv } from './env';
+import { RateLimiter, withRetryOn429 } from './rate-limiter';
 
 const DEFAULT_AUTH_API_URL = 'https://psdabackend.optimusfoxdev.com';
 const LOGIN_PATH = '/users/auth/v1/login';
+
+// Shared across every ApiSession instance/worker so the cap applies process-wide.
+const DEFAULT_LOGIN_RATE_LIMIT = 10;
+const loginRateLimiter = new RateLimiter(
+  Number(process.env.LOGIN_API_RATE_LIMIT_PER_MINUTE) || DEFAULT_LOGIN_RATE_LIMIT,
+  60_000,
+);
 
 type LoginResponse = { data?: { accessToken?: string; user?: unknown } };
 type SessionData = { token: string; user: unknown };
@@ -56,14 +64,18 @@ export class ApiSession {
       baseURL: process.env.AUTH_API_URL?.trim() || DEFAULT_AUTH_API_URL,
       extraHTTPHeaders: { 'x-user-type': 'institute' },
     });
-    const response = await this.api.post(LOGIN_PATH, {
-      data: {
-        emailAddress: requiredEnv('LOGIN_EMAIL'), password: requiredEnv('LOGIN_PASSWORD'),
-        rememberMe: true,
-        // The canvas captcha is validated client-side before this API call.
-        captcha: 'API001',
-      },
-    });
+    const response = await loginRateLimiter.schedule(() =>
+      withRetryOn429(() =>
+        this.api!.post(LOGIN_PATH, {
+          data: {
+            emailAddress: requiredEnv('LOGIN_EMAIL'), password: requiredEnv('LOGIN_PASSWORD'),
+            rememberMe: true,
+            // The canvas captcha is validated client-side before this API call.
+            captcha: 'API001',
+          },
+        }),
+      ),
+    );
     const body = (await response.json()) as LoginResponse;
     if (!response.ok() || !body.data?.accessToken || !body.data.user) {
       throw new Error(`API login failed (${response.status()}). The response did not contain a usable token and user.`);

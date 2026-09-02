@@ -1,4 +1,4 @@
-import type { Page } from '@playwright/test';
+import { expect, type Page } from '@playwright/test';
 import { selectDropdownOption, searchAndSelectDropdownOption } from '../helpers/dropdown';
 import { fieldByLabel, getFieldErrorText } from '../helpers/validation';
 import type { TestFile } from '../helpers/test-files';
@@ -74,8 +74,57 @@ export class BasicInfoPage {
     await this.textbox('Whatsapp*').fill(value);
   }
 
+  async fillInstituteMobileNo(value: string): Promise<void> {
+    // Skip if field is disabled (readonly/auto-populated by app)
+    const isDisabled = await this.textbox('Institute Mobile No*').isDisabled();
+    if (!isDisabled) {
+      await this.textbox('Institute Mobile No*').fill(value);
+    }
+  }
+
+  async fillInstituteEmail(value: string): Promise<void> {
+    // Skip if field is disabled (readonly/auto-populated by app)
+    const isDisabled = await this.textbox('Institute Email Address*').isDisabled();
+    if (!isDisabled) {
+      await this.textbox('Institute Email Address*').fill(value);
+    }
+  }
+
+  /**
+   * Writes `value` into the native date input via Playwright's own `fill()`
+   * rather than a hand-rolled `element.value = ...` + dispatch. This field is
+   * a React-controlled MUI input: manually assigning `.value` (even through
+   * the native property setter) and dispatching synthetic events can leave
+   * the app's own validation state out of sync with the DOM — confirmed live
+   * against the app, where an identical manual dispatch sequence sometimes
+   * left "Date of establishment is required." from never appearing after
+   * clearing the field, and the future/past-date checks never running.
+   * `fill()` is Playwright's documented, framework-safe way to set inputs and
+   * reliably triggers the app's own onChange/validation. `toPass()` guards
+   * only against the fresh-draft hydration race (a write landing before the
+   * wizard finishes loading its server state gets silently overwritten).
+   */
+  private async writeDateOfEstablishment(value: string): Promise<void> {
+    const dateInput = this.field('Date of establishment of institute*').locator('input[type="date"]');
+
+    await expect(async () => {
+      await dateInput.fill(value);
+      expect(await dateInput.inputValue()).toBe(value);
+    }).toPass({ timeout: 5_000 });
+
+    // The app validates this field via a click-away listener, not a plain
+    // blur event: dateInput.blur() leaves aria-invalid/"required" text from
+    // ever appearing (confirmed live — the error only renders after a real
+    // click on another part of the page). Click elsewhere to trigger it.
+    await this.page.getByRole('heading', { level: 2 }).click();
+  }
+
   async setDateOfEstablishment(isoDate: string): Promise<void> {
-    await this.field('Date of establishment of institute*').locator('input[type="date"]').fill(isoDate);
+    await this.writeDateOfEstablishment(isoDate);
+  }
+
+  async clearDateOfEstablishment(): Promise<void> {
+    await this.writeDateOfEstablishment('');
   }
 
   async fillWebsite(value: string): Promise<void> {

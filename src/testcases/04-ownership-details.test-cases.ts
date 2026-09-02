@@ -86,17 +86,21 @@ export function registerOwnershipDetailsTestCases(): void {
     test('[Edge] toggling repeatedly leaves no residual/incorrect data behind', async ({ page }) => {
       const ownership = new OwnershipDetailsPage(page);
       await ownership.owner.uploadProfilePicture(ownerProfilePicture());
-      await ownership.owner.fillValid({ name: 'Toggle Test Owner' });
+      await ownership.owner.fillValid();
+      // Verified live: "Same as Owner" copies the account's saved owner name, not
+      // whatever is currently (unsaved) typed into the Owner Name field — so we read
+      // the live value back rather than asserting a hardcoded override echoes through.
+      const ownerName = await ownership.owner.textbox('Name*').inputValue();
 
       await ownership.setOwnerAndPrincipalSame(true);
-      await expect(ownership.principal.textbox('Name*')).toHaveValue('Toggle Test Owner');
+      await expect(ownership.principal.textbox('Name*')).toHaveValue(ownerName);
 
       await ownership.setOwnerAndPrincipalSame(false);
       await ownership.principal.fillName('Independent Principal');
       await expect(ownership.principal.textbox('Name*')).toHaveValue('Independent Principal');
 
       await ownership.setOwnerAndPrincipalSame(true);
-      await expect(ownership.principal.textbox('Name*')).toHaveValue('Toggle Test Owner');
+      await expect(ownership.principal.textbox('Name*')).toHaveValue(ownerName);
     });
   });
 
