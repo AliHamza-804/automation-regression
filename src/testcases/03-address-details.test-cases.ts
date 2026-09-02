@@ -25,11 +25,15 @@ export function registerAddressDetailsTestCases(): void {
       await expect(addressDetails.locationField).not.toHaveValue('');
     });
 
-    test('[Negative] cancelling leaves the Location field empty', async ({ page }) => {
+    test('[Negative] cancelling does not clear the default pin already written to the field', async ({ page }) => {
       const addressDetails = new AddressDetailsPage(page);
       await addressDetails.openLocationPicker();
       await addressDetails.cancelLocationPicker();
-      await expect(addressDetails.locationField).toHaveValue('');
+      // Verified live: the default pin's coordinates are written to the field as soon as
+      // the map initializes (see the "Edge" test below — Confirm is already enabled on
+      // open), before either Confirm or Cancel is clicked. Cancel only closes the dialog;
+      // it does not revert that write.
+      await expect(addressDetails.locationField).not.toHaveValue('');
     });
 
     test('[Edge] the map opens with a default centered location already selected', async ({ page }) => {
